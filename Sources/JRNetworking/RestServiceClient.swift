@@ -27,20 +27,20 @@ open class RestServiceClient {
                                                     headers: HTTPHeaders? = nil,
                                                     type: T.Type,
                                                     errorType: U.Type) -> AnyPublisher<T, Error> {
-        let fullURLString = baseURL + resource.resource.route
+        let fullURLString = baseURL + resource.jrResource.route
         
         guard let url = URL(string: fullURLString) else {
             return Fail(error: JRNetworkingError.invalidRequestError("Invalid URL: \(fullURLString)")).eraseToAnyPublisher()
         }
         
         var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = resource.resource.method.rawValue
+        urlRequest.httpMethod = resource.jrResource.method.rawValue
         
         headers?.forEach { (key, value) in
             urlRequest.setValue(value, forHTTPHeaderField: key)
         }
         
-        if resource.resource.method != .get, let parameters = parameters {
+        if resource.jrResource.method != .get, let parameters = parameters {
             if let data = try? JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted) {
                 urlRequest.httpBody = data
                 debugPrint(url: fullURLString, jsonData: data, title: "Request JSON")
