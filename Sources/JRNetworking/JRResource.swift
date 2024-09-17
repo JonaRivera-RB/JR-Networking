@@ -10,7 +10,7 @@ import Foundation
 public typealias HTTPHeaders = [String: String]
 
 public struct JRResource {
-    public let resource: ResourceDefinition
+    public var resource: ResourceDefinition
     
     public init(resource: ResourceDefinition) {
         self.resource = resource
@@ -18,8 +18,8 @@ public struct JRResource {
 }
 
 public struct ResourceDefinition {
-    public let route: String
-    public let method: HTTPMethod
+    public var route: String
+    public var method: HTTPMethod
     
     public init(route: String, method: HTTPMethod) {
         self.route = route

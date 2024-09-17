@@ -15,13 +15,11 @@ open class RestServiceClient {
     private let baseURL: String
     private let headers: HTTPHeaders
     private let sessionConfiguration: URLSessionConfiguration
-    private let logOutAction: ((Decodable?) -> ())?
     
     public init(configuration: ClientConfiguration) {
         baseURL = configuration.baseURL
         headers = configuration.httpHeaders
         sessionConfiguration = configuration.sessionConfiguration
-        logOutAction = configuration.logOutAction
     }
     
     public func request<T: Decodable, U: Decodable>(resource: JRResource,
@@ -68,9 +66,9 @@ open class RestServiceClient {
                     self?.debugPrint(url: fullURLString, jsonData: data, title: "Response JSON")
                     do {
                         let apiError = try decoder.decode(errorType, from: data)
-                        self?.logOutAction?(apiError)
+                        throw JRNetworkingError.apiError(urlResponse.statusCode, error: apiError)
                     } catch {
-                        self?.logOutAction?(nil)
+                        throw JRNetworkingError.invalidResponse
                     }
                 case 400, 402...599:
                     let decoder = JSONDecoder()

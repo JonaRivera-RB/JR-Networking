@@ -11,7 +11,6 @@ public struct ClientConfiguration {
     let baseURL: String
     let httpHeaders: HTTPHeaders
     let sessionConfiguration: URLSessionConfiguration
-    let logOutAction: ((Decodable?) -> ())?
     
     public init(baseURL: String,
                 httpHeaders: HTTPHeaders,
@@ -20,7 +19,6 @@ public struct ClientConfiguration {
         self.baseURL = baseURL
         self.httpHeaders = httpHeaders
         self.sessionConfiguration = sessionConfiguration
-        self.logOutAction = logOutAction
     }
 }
 
