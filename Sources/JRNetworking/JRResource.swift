@@ -10,12 +10,21 @@ import Foundation
 public typealias HTTPHeaders = [String: String]
 
 public struct JRResource {
-    let resource: ResourceDefinition
+    public let resource: ResourceDefinition
+    
+    public init(resource: ResourceDefinition) {
+        self.resource = resource
+    }
 }
 
 public struct ResourceDefinition {
-    let route: String
-    let method: HTTPMethod
+    public let route: String
+    public let method: HTTPMethod
+    
+    public init(route: String, method: HTTPMethod) {
+        self.route = route
+        self.method = method
+    }
 }
 
 public enum HTTPMethod: String {
